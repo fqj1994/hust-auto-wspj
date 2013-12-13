@@ -66,7 +66,7 @@ function do_silent_save(){
 
 function wait_on_list_page() {
     if (window.location.pathname.indexOf("kc/wspj.jsp") == -1) return;
-    if ($("#tdList").html().indexOf("gotoKcpj") >= 1 || $("#tdList").html().indexOf("gotoCkpj") >= 1) {
+    if ($("#tdList").html().indexOf("gotoWspj") >= 1  || $("#tdList").html().indexOf("gotoKcpj") >= 1 || $("#tdList").html().indexOf("gotoCkpj") >= 1) {
         
         if ($("#tdList").html().indexOf("全自動評價本頁") == -1)
             $("#tdList").prepend("<span style=\"font-size: 30px;\">以下只會評價未評完的課程（已評完的課程不會修改）</span><br/><a style=\"font-size: 20px; \" href=\"javascript:judgeall('jty');\">本頁全特優</a>|" + 
@@ -83,6 +83,14 @@ function wait_on_list_page() {
                 val.innerHTML = val.innerHTML.replace("javascript:void(0)", pjurl) +
                     "<a class=\"jty\" href=" + pjurl + "&auto=1>自動特優</a>|<a class=\"jy\" href=" + pjurl + "&auto=2>自動優</a>|<a class=\"jl\" href=" + pjurl + "&auto=3>自動良</a>|<a class=\"jyb\" href=" + pjurl + "&auto=4>自動一般</a>|<a class=\"jc\" href=" + pjurl + "&auto=5>自動差</a>";
                 val.outerHTML = val.outerHTML.replace("gotoKcpj", "dummypj");
+            }
+            if (val.outerHTML.indexOf("gotoWspj") >= 1) {
+                var s = val.outerHTML.split('(')[1].split(')')[0].split(',');
+                for (var i = 0; i < s.length; i++) s[i] = s[i].replace("'", "").replace("'", "");
+                var pjurl = getpjurl(s[0], s[1], s[2], s[3]);
+                val.innerHTML = val.innerHTML.replace("javascript:void(0)", pjurl) +
+                    "<a class=\"jty\" href=" + pjurl + "&auto=1>自動特優</a>|<a class=\"jy\" href=" + pjurl + "&auto=2>自動優</a>|<a class=\"jl\" href=" + pjurl + "&auto=3>自動良</a>|<a class=\"jyb\" href=" + pjurl + "&auto=4>自動一般</a>|<a class=\"jc\" href=" + pjurl + "&auto=5>自動差</a>";
+                val.outerHTML = val.outerHTML.replace("gotoWspj", "dummypj");
             }
             if (val.outerHTML.indexOf("gotoCkpj") >= 1) {
                 var s = val.outerHTML.split('(')[1].split(')')[0].split(',');
@@ -112,7 +120,7 @@ function wait_on_judge_list() {
                         document.write("This one is finished");
                 }
                 else
-                    window.location.href = baseurl + "num=" + (curindex + 1);
+                    window.location.href = baseurl + "&num=" + (curindex + 1);
             }
             var scoreloc = window.location.href.indexOf("auto");
             var score = window.location.href[scoreloc + 5];
