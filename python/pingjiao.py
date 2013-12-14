@@ -1,5 +1,36 @@
 #!/usr/bin/env python
 
+
+"""
+Automatic HUST WSPJ Python Version
+
+
+Usage:
+    ./pingjiao.py <stu_ID> <password> <level>
+    level = 0 ~ 4
+        0 for pretty good, 4 for bad
+
+Procedure:
+    1. Login with automatic CAPTCHA decoder
+    2. Get the un-voted (un-judged) courses' list
+        (including the 2nd/3rd page)
+    3. Vote every course on your selected <level>
+        (
+            All the teachers will be voted for
+            courses with more than one teacher.
+            [ That's common in medical school ]
+        )
+
+Prerequisite:
+    * Python 2.x
+    * Requests (python-requests)
+    * Selenium Webdriver (python-selenium)
+    * Tesseract
+    * ImageMagicK
+
+
+"""
+
 from selenium import webdriver
 import requests
 import time
